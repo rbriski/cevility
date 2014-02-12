@@ -25,7 +25,7 @@ class EV < Sinatra::Base
   end
 
   get '/status/:license' do
-    @status = Status[:license => params[:license]]
+    @status = Status[:license => params[:license].upcase]
     if @status.blank?
       flash[:danger] = "There is no record of that license [#{params[:license]}]"
       redirect '/'
