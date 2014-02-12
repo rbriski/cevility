@@ -3,7 +3,7 @@ require 'bundler'
 
 Bundler.require
 
-DB = Sequel.connect('postgres://localhost/ev')
+DB = Sequel.connect(ENV.fetch("DATABASE_URL"))
 
 $: << File.dirname(__FILE__) + "/lib"
 require 'status'
