@@ -43,6 +43,7 @@ GEM
     method_source (0.8.2)
     minitest (4.7.5)
     multi_json (1.8.4)
+    newrelic_rpm (3.7.2.192)
     nio4r (1.0.0)
     pg (0.17.1)
     pry (0.9.12.6)
@@ -89,6 +90,7 @@ DEPENDENCIES
   activesupport
   guard (>= 2.3.0)
   guard-shotgun!
+  newrelic_rpm
   pg
   rack-flash3
   racksh

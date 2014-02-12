@@ -8,6 +8,7 @@ gem 'sinatra'
 gem 'pg'
 gem 'sequel'
 gem 'rake'
+gem 'newrelic_rpm'
 
 group :development do
   gem 'thin'
