@@ -1,0 +1,51 @@
+<div class="container">
+<div class="text-center col-md-4 col-md-offset-4">
+<h1>Set status for <i><%= @license %></i></h1>
+<h1><small>Tell others about how to behave when they see your car near a charging station</small></h1>
+</div>
+<div class="col-md-4 col-md-offset-4">
+<form role="form" method='post' action='/set/<%= @license %>'>
+<div class='form-group'>
+<div class="radio">
+<label>
+  <input type="radio" name="status" id="status_ok" value="OK" />
+  <span class="label label-success">OK</span> You are OK with someone unplugging your car
+</label>
+</div>
+
+<div class="radio">
+<label>
+  <input type="radio" name="status" id="status_charging" value="CHARGING" />
+  <span class="label label-danger">CHARGING</span> Please do not unplug my car
+</label>
+</div>
+
+
+<div class="radio">
+<label>
+  <input type="radio" name="status" id="status_waiting" value="WAITING" />
+  <span class="label label-default">WAITING</span> You would like to be plugged in when someone else has finished.
+</label>
+</div>
+</div>
+
+<hr />
+
+<div class="form-group">
+<label for="description">Additional status message</label>
+<textarea style="width:100%;" name='description'></textarea>
+</div>
+</div>
+
+<div class="text-center col-md-4 col-md-offset-4">
+
+<div class='form-group'>
+<input type='submit' name="do" class='btn btn-success btn-lg' value='Set Status' />
+</div>
+
+<div class='form-group'>
+<a href="/">Cancel</a>
+</div>
+
+</div>
+</form>
