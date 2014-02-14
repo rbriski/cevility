@@ -3,14 +3,12 @@ require 'bundler'
 
 Bundler.require
 
-DB = Sequel.connect(ENV.fetch("DATABASE_URL"))
-
+ENV['DATABASE_URL'] ||= 'postgres://localhost/ev'
+DB ||= Sequel.connect(ENV.fetch("DATABASE_URL"))
 
 $stdout.sync = true
 
-
-$: << File.dirname(__FILE__) + "/lib"
-require 'status'
+Dir[File.dirname(__FILE__) + '/lib/**/*.rb'].each {|file| require file }
 
 require './ev'
 run EV
