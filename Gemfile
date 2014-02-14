@@ -15,4 +15,6 @@ group :development do
   gem 'guard', '>= 2.3.0'
   gem 'guard-shotgun', :git => 'https://github.com/rchampourlier/guard-shotgun.git'
   gem 'racksh'
+  gem 'rspec'
+  gem 'rack-test'
 end
