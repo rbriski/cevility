@@ -16,7 +16,6 @@ class EV < Sinatra::Base
   end
 
   post '/' do
-    puts params
     if params[:do] == 'Check Status'
       redirect "/status/#{params[:license]}"
     else
@@ -52,5 +51,10 @@ class EV < Sinatra::Base
 
   get '/privacy' do
     erb :privacy
+  end
+
+  not_found do
+    status 404
+    erb :not_found
   end
 end

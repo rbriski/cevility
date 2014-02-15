@@ -9,11 +9,12 @@ gem 'pg'
 gem 'sequel'
 gem 'rake'
 gem 'newrelic_rpm'
+gem 'unicorn'
 
 group :development do
-  gem 'thin'
   gem 'guard', '>= 2.3.0'
   gem 'guard-shotgun', :git => 'https://github.com/rchampourlier/guard-shotgun.git'
+  gem 'guard-rspec', :git => 'https://github.com/guard/guard-rspec.git', :require => false
   gem 'racksh'
   gem 'rspec'
   gem 'rack-test'
