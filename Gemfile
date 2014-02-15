@@ -10,6 +10,7 @@ gem 'sequel'
 gem 'rake'
 gem 'newrelic_rpm'
 gem 'unicorn'
+gem 'honeybadger'
 
 group :development do
   gem 'guard', '>= 2.3.0'
