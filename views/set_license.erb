@@ -8,14 +8,14 @@
 <div class='form-group'>
 <div class="radio">
 <label>
-  <input type="radio" name="status" id="status_ok" value="OK" />
+  <input type="radio" name="status[name]" id="status_ok" value="OK" CHECKED/>
   <span class="label label-success">OK</span> You are OK with someone unplugging your car
 </label>
 </div>
 
 <div class="radio">
 <label>
-  <input type="radio" name="status" id="status_charging" value="CHARGING" />
+  <input type="radio" name="status[name]" id="status_charging" value="CHARGING" />
   <span class="label label-danger">CHARGING</span> Please do not unplug my car
 </label>
 </div>
@@ -23,17 +23,16 @@
 
 <div class="radio">
 <label>
-  <input type="radio" name="status" id="status_waiting" value="WAITING" />
+  <input type="radio" name="status[name]" id="status_waiting" value="WAITING" />
   <span class="label label-default">WAITING</span> You would like to be plugged in when someone else has finished.
 </label>
-</div>
 </div>
 
 <hr />
 
 <div class="form-group">
 <label for="description">Additional status message</label>
-<textarea style="width:100%;" name='description'></textarea>
+<textarea style="width:100%;" name='status[description]'></textarea>
 </div>
 </div>
 
@@ -49,3 +48,6 @@
 
 </div>
 </form>
+
+</div>
+</div>

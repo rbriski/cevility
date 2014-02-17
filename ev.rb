@@ -3,12 +3,38 @@ require 'active_support/all'
 
 class EV < Sinatra::Base
   set :sessions, true
+  set :logging, true
   use Rack::Flash, :sweep => true
 
   helpers do
     def flash_types
       [:success, :info, :warning, :danger]
     end
+
+    def statuses(status)
+      puts status
+      s = {
+        'OK' => 'ok to unplug',
+        'CHARGING' => 'currently charging',
+        'WAITING' => 'waiting for a charge'
+      }
+      s[status]
+    end
+  end
+
+  before do
+    new_params = {}
+    params.each_pair do |full_key, value|
+      this_param = new_params
+      split_keys = full_key.split(/\]\[|\]|\[/)
+      split_keys.each_index do |index|
+        break if split_keys.length == index + 1
+        this_param[split_keys[index]] ||= {}
+        this_param = this_param[split_keys[index]]
+     end
+     this_param[split_keys.last] = value
+    end
+    request.params.replace new_params
   end
 
   get '/' do
@@ -16,17 +42,21 @@ class EV < Sinatra::Base
   end
 
   post '/' do
+    license = License.new :number => params[:license]
+
     if params[:do] == 'Check Status'
-      redirect "/status/#{params[:license]}"
+      redirect "/status/#{license}"
     else
-      redirect "/set/#{params[:license]}"
+      redirect "/set/#{license}"
     end
   end
 
   get '/status/:license' do
-    @status = Status[:license => params[:license].upcase]
+    license = License.new :number => params[:license]
+
+    @status = Status[:license => license.number]
     if @status.blank?
-      flash[:danger] = "There is no record of that license [#{params[:license]}]"
+      flash[:danger] = "There is no record of that license [#{license}]"
       redirect '/'
     else
       erb :check_status
@@ -34,16 +64,17 @@ class EV < Sinatra::Base
   end
 
   get '/set/:license' do
-    @license = params[:license]
+    @license = License.new :number => params[:license]
     erb :set_license
   end
 
   post '/set/:license' do
-    @license = params[:license]
+    @status = params[:status]
+    @license = License.new :number => params[:license]
 
-    status = Status.find_or_create_by_license(@license)
-    status.status = params[:status]
-    status.description = params[:description]
+    status = Status.find_or_create_by_license(@license.number)
+    status.status = @status[:name]
+    status.description = @status[:description]
     status.save
 
     redirect "/status/#{@license}"

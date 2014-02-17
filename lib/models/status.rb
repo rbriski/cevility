@@ -3,11 +3,9 @@ class Status < Sequel::Model
 
   class << self
     def find_or_create_by_license(number)
-      number = number.upcase
-
       license = self[:license => number]
       if license.blank?
-        puts "setting to #{license}"
+        puts "#{number} not found, creating."
         license = self.create { | s | s.license = number }
       end
       license
