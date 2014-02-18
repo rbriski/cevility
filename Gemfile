@@ -11,6 +11,7 @@ gem 'rake'
 gem 'newrelic_rpm'
 gem 'unicorn'
 gem 'honeybadger'
+gem 'rqrcode'
 
 group :development do
   gem 'guard', '>= 2.3.0'

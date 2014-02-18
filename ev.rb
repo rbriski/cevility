@@ -84,6 +84,11 @@ class EV < Sinatra::Base
     erb :privacy
   end
 
+  get '/qr/:code' do
+    @qr = RQRCode::QRCode.new( "http://www.cevility.com/qr/#{params[:code]}", :size => 4, :level => :h )
+    erb :sign, :layout => false
+  end
+
   not_found do
     status 404
     erb :not_found

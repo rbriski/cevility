@@ -1,0 +1,38 @@
+<html>
+<head>
+<!-- Include Print CSS -->
+<link rel="stylesheet" href="/css/print.css" type="text/css" />
+</head>
+<body>
+<div class='container'>
+<h1>Check the status of my charge</h1>
+</div>
+
+<div class='container'>
+<table>
+<% @qr.modules.each_index do |x| %>
+  <tr>
+  <% @qr.modules.each_index do |y| %>
+   <% if @qr.dark?(x,y) %>
+    <td class="black"/>
+   <% else %>
+    <td class="white"/>
+   <% end %>
+  <% end %>
+  </tr>
+<% end %>
+</table>
+
+</div>
+<div class='footer'>
+  <ul>
+  <li>Easy EV Etiquette</li>
+  <li>·</li>
+  <li>c<span class="muted">ev</span>ility.com</li>
+  </ul>
+</div>
+
+
+
+</body>
+</html>
