@@ -85,6 +85,10 @@ class EV < Sinatra::Base
     redirect "/status/#{@license}"
   end
 
+  get '/qr/:code' do
+    redirect '/status/7BWN656'
+  end
+
   get '/privacy' do
     erb :privacy
   end
