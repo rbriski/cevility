@@ -12,11 +12,13 @@ gem 'newrelic_rpm'
 gem 'unicorn'
 gem 'honeybadger'
 gem 'rqrcode'
+gem "koala", "~> 1.8.0rc1"
 
 group :development do
   gem 'guard', '>= 2.3.0'
   gem 'guard-shotgun', :git => 'https://github.com/rchampourlier/guard-shotgun.git'
   gem 'guard-rspec', :git => 'https://github.com/guard/guard-rspec.git', :require => false
+  gem 'guard-coffeescript'
   gem 'racksh'
   gem 'rspec'
   gem 'rack-test'

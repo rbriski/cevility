@@ -19,3 +19,5 @@ guard :rspec do
   watch(%r{^views/.*\.(erb|haml|slim)$})     { "spec/features" }
 end
 
+
+guard 'coffeescript', :input => 'lib/coffee', :output => 'public/js', :bare => true
