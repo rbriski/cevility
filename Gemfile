@@ -5,7 +5,7 @@ ruby "2.1.0"
 gem 'activesupport'
 gem 'rack-flash3', :require => 'rack-flash'
 gem 'sinatra'
-gem 'sinatra-contrib'
+gem 'sinatra-contrib', :require => 'sinatra/json'
 gem 'pg'
 gem 'sequel'
 gem 'rake'
