@@ -1,5 +1,4 @@
 .ruby-version
 .ruby-gemset
-public/js
 .env
 .DS_Store
