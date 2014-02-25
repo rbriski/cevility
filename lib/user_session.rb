@@ -1,40 +1,31 @@
 require 'active_support/core_ext'
 require 'koala'
-require 'pp'
 
-# {"provider"=>"facebook",
-#  "uid"=>"545775971",
-#  "info"=>
-#   {"nickname"=>"bob.briski",
-#    "email"=>"rbriski@gmail.com",
-#    "name"=>"Bob Briski",
-#    "first_name"=>"Bob",
-#    "last_name"=>"Briski",
-#    "image"=>"http://graph.facebook.com/545775971/picture",
-#    "urls"=>{"Facebook"=>"https://www.facebook.com/bob.briski"},
-#    "verified"=>true},
-#  "credentials"=>
-#   {"token"=>
-#     "CAAKgW5uUc2UBALaDv21xIgtBktsoZCuBEEr1H62GUlZAbvNPFCKvmzmlseg3DFrGUmujT22yqMLJt49HnSkY6hKDR4qov7lZCWawcsZAuZCH5dHjtC4OncZC6PhdhZAc1mZBXZAiO6ZAAUiloeTZBEFZByMWgsd8SVLCnCVgUqSkPMAvd9V7F9O5r1J3W1O4mWGMXbkZD",
-#    "expires_at"=>1398402948,
-#    "expires"=>true},
-#  "extra"=>
-#   {"raw_info"=>
-#     {"id"=>"545775971",
-#      "name"=>"Bob Briski",
-#      "first_name"=>"Bob",
-#      "last_name"=>"Briski",
-#      "link"=>"https://www.facebook.com/bob.briski",
-#      "gender"=>"male",
-#      "email"=>"rbriski@gmail.com",
-#      "timezone"=>-8,
-#      "locale"=>"en_US",
-#      "verified"=>true,
-#      "updated_time"=>"2014-02-24T05:15:28+0000",
-#      "username"=>"bob.briski"}}}
+require_relative 'core_ext/hash'
+
 class UserSession
-  def initialize(response)
+  def authorized?
+    @auth and @auth.has_key? 'uid'
+  end
+
+  def connect(response)
     @auth = response['omniauth.auth']
+  end
+
+  def expired?
+    return true if expires_at.nil?
+
+    Time.now.to_i > expires_at
+  end
+
+  def expires_at
+    @auth and @auth.dig('credentials', 'expires_at')
+  end
+
+  # We only want to reauthorized if the session has expired
+  # and the user has previously logged in
+  def reauthorize?
+    @auth and expired?
   end
 
   def revoke_all_permissions

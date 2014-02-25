@@ -8,13 +8,18 @@ class EV < Sinatra::Base
   use Rack::Flash, :sweep => true
 
   use OmniAuth::Builder do
-    provider :facebook, ENV.fetch('FB_APP_ID'), ENV.fetch('FB_SECRET'), :scope => 'email'
+    provider :facebook, ENV.fetch('FB_APP_ID'), ENV.fetch('FB_SECRET'), :scope => SCOPE
   end
 
 
   helpers do
     def flash_types
       [:success, :info, :warning, :danger]
+    end
+
+    def current_user
+      session['current_user'] ||= UserSession.new
+      session['current_user']
     end
 
     def statuses(status)

@@ -63,50 +63,38 @@
   </script>
 </head>
 <body>
-<div id="fb-root"></div>
-    <script>
-      window.fbAsyncInit = function() {
-        FB.init({
-          appId      : '739265266086757',
-          status     : true,
-          cookie     : true,
-          xfbml      : true
-        });
-      };
-
-      (function(d) {
-        var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
-        js = d.createElement('script'); js.id = id; js.async = true;
-        js.src = "//connect.facebook.net/en_US/all.js";
-        d.getElementsByTagName('head')[0].appendChild(js);
-      }(document));
-
-      $(function() {
-        $('#connect').click(function(e) {
-          e.preventDefault();
-
-          FB.login(function(response) {
-            if (response.authResponse) {
-              $.getJSON('/auth/facebook/callback', function(json) {
-                console.log(JSON.stringify(json));
-                // Other stuff
-              });
-            }
-          }, { scope: 'email' });
-        });
-
-        $('#logout').click(function(e) {
-          e.preventDefault();
-
-          FB.logout(function(response) {
-            $.getJSON('/session/destroy', function(json) {
-              console.log(JSON.stringify(json));
-              //stringify
-            });
-          });
-        });
+  <div id="fb-root"></div>
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '739265266086757',
+        status     : true,
+        cookie     : true,
+        xfbml      : true
       });
-    </script>
+
+      FB.Event.subscribe('auth.authResponseChange', function(response) {
+        // Here we specify what we do with the response anytime this event occurs.
+        if (response.status === 'connected') {
+          $.getJSON('/auth/facebook/callback', function(json) {
+            console.log(JSON.stringify(json));
+          });
+          // The response object is returned with a status field that lets the app know the current
+          // login status of the person. In this case, we're handling the situation where they
+          // have logged in to the app.
+          console.log('Reauthorizing...')
+          console.log(response)
+        };
+      });
+    };
+
+    (function(d) {
+      var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+      js = d.createElement('script'); js.id = id; js.async = true;
+      js.src = "//connect.facebook.net/en_US/all.js";
+      d.getElementsByTagName('head')[0].appendChild(js);
+    }(document));
+  </script>
   <div id="wrap">
     <nav class='navbar navbar-default navbar-static-top' role='navigation'>
     <div class='container'>
@@ -118,10 +106,10 @@
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#" id="help">Help</a></li>
         <li><a href="http://blog.cevility.com">Blog</a></li>
-        <% if session['current_user'] %>
+        <% if current_user.authorized? %>
         <li class="dropdown">
           <a href="#" class="img dropdown-toggle" data-toggle="dropdown">
-          <img src="<%= session['current_user'].picture :type => 'small' %>">
+          <img src="<%= current_user.picture :type => 'small' %>">
           </a>
           <ul class="dropdown-menu">
             <li><a href="#" id='logout'>Logout</a></li>
@@ -146,5 +134,5 @@
   </div>
   </div>
   <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.0/js/bootstrap.min.js"></script>
-  <script src="/js/main.js"></script>
+  <script src="/js/fb.js"></script>
 </body>

@@ -20,4 +20,4 @@ guard :rspec do
 end
 
 
-guard 'coffeescript', :input => 'lib/coffee', :output => 'public/js', :bare => true
+guard 'coffeescript', :input => 'lib/coffee', :output => 'public/js'
