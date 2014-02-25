@@ -5,6 +5,7 @@ ruby "2.1.0"
 gem 'activesupport'
 gem 'rack-flash3', :require => 'rack-flash'
 gem 'sinatra'
+gem 'sinatra-contrib'
 gem 'pg'
 gem 'sequel'
 gem 'rake'
@@ -13,6 +14,7 @@ gem 'unicorn'
 gem 'honeybadger'
 gem 'rqrcode'
 gem "koala", "~> 1.8.0rc1"
+gem 'omniauth-facebook', '1.4.0'
 
 group :development do
   gem 'guard', '>= 2.3.0'

@@ -3,6 +3,7 @@
   <title>EV</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <meta charset="utf-8">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
   <link href="/css/bootstrap.min.css" rel="stylesheet" />
   <link href="/css/main.css" rel="stylesheet" />
   <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" />
@@ -63,13 +64,49 @@
 </head>
 <body>
 <div id="fb-root"></div>
-  <script>(function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=739265266086757";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));</script>
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '739265266086757',
+          status     : true,
+          cookie     : true,
+          xfbml      : true
+        });
+      };
+
+      (function(d) {
+        var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+        js = d.createElement('script'); js.id = id; js.async = true;
+        js.src = "//connect.facebook.net/en_US/all.js";
+        d.getElementsByTagName('head')[0].appendChild(js);
+      }(document));
+
+      $(function() {
+        $('#connect').click(function(e) {
+          e.preventDefault();
+
+          FB.login(function(response) {
+            if (response.authResponse) {
+              $.getJSON('/auth/facebook/callback', function(json) {
+                console.log(JSON.stringify(json));
+                // Other stuff
+              });
+            }
+          }, { scope: 'email' });
+        });
+
+        $('#logout').click(function(e) {
+          e.preventDefault();
+
+          FB.logout(function(response) {
+            $.getJSON('/session/destroy', function(json) {
+              console.log(JSON.stringify(json));
+              //stringify
+            });
+          });
+        });
+      });
+    </script>
   <div id="wrap">
     <nav class='navbar navbar-default navbar-static-top' role='navigation'>
     <div class='container'>
@@ -81,6 +118,16 @@
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#" id="help">Help</a></li>
         <li><a href="http://blog.cevility.com">Blog</a></li>
+        <% if session['current_user'] %>
+        <li class="dropdown">
+          <a href="#" class="img dropdown-toggle" data-toggle="dropdown">
+          <img src="<%= session['current_user'].picture :type => 'small' %>">
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="#" id='logout'>Logout</a></li>
+          </ul>
+        </li>
+        <% end %>
       </ul>
       </div>
     </div>

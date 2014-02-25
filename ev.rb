@@ -1,10 +1,16 @@
 require 'sinatra/base'
 require 'active_support/all'
 
+SCOPE = 'email'
 class EV < Sinatra::Base
   set :sessions, true
   set :logging, true
   use Rack::Flash, :sweep => true
+
+  use OmniAuth::Builder do
+    provider :facebook, ENV.fetch('FB_APP_ID'), ENV.fetch('FB_SECRET'), :scope => 'email'
+  end
+
 
   helpers do
     def flash_types
@@ -19,11 +25,6 @@ class EV < Sinatra::Base
         'WAITING' => 'waiting for a charge'
       }
       s[status]
-    end
-
-    def fb_auth
-      @oauth ||= Koala::Facebook::OAuth.new(739265266086757, 'd5d7a0ed452adc10d0550fe7eaf598ef', url('/fb_auth'))
-      @oauth
     end
   end
 
@@ -93,34 +94,9 @@ class EV < Sinatra::Base
     erb :privacy
   end
 
-  get '/qr/:code' do
+  get '/qr/:code/show' do
     @qr = RQRCode::QRCode.new( "http://www.cevility.com/qr/#{params[:code]}", :size => 4, :level => :h )
     erb :sign, :layout => false
-  end
-
-  get '/session/new' do
-    session['referrer'] = request.referrer
-    session['oauth'] = Koala::Facebook::OAuth.new(ENV.fetch('FB_APP_ID'), ENV.fetch('FB_SECRET'), url('/session/create'))
-    redirect session['oauth'].url_for_oauth_code(:scope => 'email')
-  end
-
-  get '/session/create' do
-    if params.has_key?('code')
-      session['access_token'] = session['oauth'].get_access_token(params[:code])
-    else
-      session['access_denied'] = true
-    end
-
-    back_to = session.delete('referrer')
-    back_to ||= '/'
-    redirect back_to
-  end
-
-  get '/session/destroy' do
-    session['graph'] = Koala::Facebook::API.new(session['access_token'])
-    profile = session['graph'].get_object("me")
-
-    puts session['graph'].delete_object("/#{profile['id']}/permissions")
   end
 
   not_found do
@@ -128,3 +104,5 @@ class EV < Sinatra::Base
     erb :not_found
   end
 end
+
+require_relative 'routes/init'

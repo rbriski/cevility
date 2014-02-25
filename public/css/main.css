@@ -52,3 +52,16 @@ body, h1, h2, h3, h4, h5, h6, p {
   display: inline;
   padding: 0 2px;
 }
+
+.navbar-nav li a.img {
+  overflow: visible;
+  padding-bottom: 9px;
+  padding-top: 9px;
+}
+
+.navbar-nav img {
+  max-height: 40px;
+  overflow: visible;
+  padding-bottom: 0px;
+  padding-top: 0px;
+}
