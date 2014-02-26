@@ -72,7 +72,48 @@
         cookie     : true,
         xfbml      : true
       });
+
+      FB.Event.subscribe('auth.authResponseChange', function(response)
+      {
+        if(response.status === "connected")
+        {
+          set_profile_picture()
+          console.log("Connected and authorized");
+        }
+        else if (response.status === 'not_authorized')
+        {
+          console.log("Not authorized");
+        }
+        else
+        {
+          console.log('Not logged in')
+          // not_logged_in to Facebook
+          FB.login(function(response) {
+            if (response && response.status === 'connected') {
+              set_profile_picture();
+            }
+          });
+        }
+      });
     };
+
+    function set_profile_picture() {
+      FB.api(
+          "/me/picture",
+          {
+              "redirect": false,
+              "height": "28",
+              "type": "square",
+              "width": "28"
+          },
+          function (response) {
+            if (response && !response.error) {
+              img = $('<img />', {'src' : response.data.url})
+              $('#fb_img_link').prepend(img)
+            }
+          }
+      );
+    }
 
     (function(d) {
       var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
@@ -94,8 +135,7 @@
         <li><a href="http://blog.cevility.com">Blog</a></li>
         <% if current_user.authorized? %>
         <li class="dropdown">
-          <a href="#" class="img dropdown-toggle" data-toggle="dropdown">
-          <img src="<%= current_user.picture :type => 'small' %>">
+          <a id='fb_img_link' href="#" class="img dropdown-toggle" data-toggle="dropdown">
           </a>
           <ul class="dropdown-menu">
             <li><a href="#" id='logout'>Logout</a></li>
