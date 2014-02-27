@@ -3,7 +3,6 @@ require 'active_support/all'
 
 SCOPE = 'email'
 class EV < Sinatra::Base
-  set :sessions, true
   set :logging, true
   use Rack::Flash, :sweep => true
 
@@ -18,8 +17,7 @@ class EV < Sinatra::Base
     end
 
     def current_user
-      session['current_user'] ||= UserSession.new
-      session['current_user']
+      @current_user ||= User[:id => session['user_id']] if session['user_id']
     end
 
     def statuses(status)

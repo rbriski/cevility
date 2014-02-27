@@ -28,7 +28,7 @@
 </label>
 </div>
 
-<% unless current_user.authorized? %>
+<% if current_user.blank? %>
 <hr />
 
 <a id='connect' class="btn btn-block btn-social btn-facebook" href="<%= request.fullpath %>">

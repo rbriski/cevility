@@ -1,21 +1,29 @@
-$('#connect').bind 'click', (e) =>
+$('#connect').bind 'click', (e) ->
   e.preventDefault()
 
-  FB.login( ((response) ->
-    if response.authResponse
-      $.getJSON('/auth/facebook/callback', (json) ->
-        console.log JSON.stringify(json)
-        window.location.reload true
-      )
-  ), {scope: 'email'})
+  Auth.login()
 
-$('#logout').bind 'click', (e) =>
-  e.preventDefault()
+$('#logout').bind 'click', (e) ->
+  Auth.logout()
 
-  FB.logout( (response) ->
-    if response.authResponse
-      $.getJSON('/session/destroy', (json) ->
-        console.log JSON.stringify(json)
-        window.location.reload true
-      )
-  )
+class Auth
+  @login: ->
+    FB.login ( (response) ->
+      window.location = '/auth/facebook/callback' if response.authResponse
+    ), {scope: 'email'}
+
+  @logout: ->
+    FB.getLoginStatus (response) ->
+      FB.logout() if response.authResponse
+    true
+
+
+namespace = (target, name, block) ->
+  [target, name, block] = [(if typeof exports isnt 'undefined' then exports else window), arguments...] if arguments.length < 3
+  top    = target
+  target = target[item] or= {} for item in name.split '.'
+  block target, top
+
+namespace "Cevility", (exports) ->
+  exports.Auth = Auth
+

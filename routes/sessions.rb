@@ -1,22 +1,22 @@
 require "sinatra/json"
+require 'pp'
 
 class EV < Sinatra::Base
   get '/auth/:provider/callback' do
-    current_user.connect request.env
+    user = User.from_omniauth request.env['omniauth.auth']
+    session['user_id'] = user.id
 
-    json result: 'success'
+    redirect request.referrer
   end
 
   get '/auth/failure' do
-    session['auth_denied'] = true
-
-    json result: 'failure'
+    redirect '/'
   end
 
   get '/session/destroy' do
-    session['current_user'] = nil
+    session['user_id'] = nil
 
-    json result: 'success'
+    redirect '/'
   end
 
   get '/session/revoke' do

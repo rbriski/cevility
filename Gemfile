@@ -15,6 +15,8 @@ gem 'honeybadger'
 gem 'rqrcode'
 gem "koala", "~> 1.8.0rc1"
 gem 'omniauth-facebook', '1.4.0'
+gem 'redis'
+gem 'moneta'
 
 group :development do
   gem 'guard', '>= 2.3.0'
