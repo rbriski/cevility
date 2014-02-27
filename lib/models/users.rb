@@ -10,7 +10,8 @@ class User < Sequel::Model
     end
 
     def from_omniauth(auth)
-      u = self.find_or_initialize_by_provider_and_uid(auth.slice(:provider, :uid)).tap do | user |
+      primary_keys = auth.slice(:provider, :uid).to_h.symbolize_keys
+      u = self.find_or_initialize_by_provider_and_uid(primary_keys).tap do | user |
         user.nickname         = auth.info.nickname
         user.name             = auth.info.name
         user.email            = auth.info.email
