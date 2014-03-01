@@ -7,6 +7,7 @@ require 'rack/session/moneta'
 
 # Set up sequel DB
 DB ||= Sequel.connect(ENV.fetch("DATABASE_URL"))
+Sequel.database_timezone = :utc
 
 # Loggin stream
 $stdout.sync = true
@@ -26,7 +27,7 @@ REDIS = Redis.new(:url => ENV.fetch('REDISCLOUD_URL'))
 
 # Set up stored sessions
 use Rack::Session::Moneta,
-  :store => Moneta.new(:Redis, :backend => REDIS, :expires => false)
+  :store => Moneta.new(:Redis, :backend => REDIS, :expires => 2592000)
 
 #fix for JSON gem/activesupport bug. More info: http://stackoverflow.com/questions/683989/how-do-you-deal-with-the-conflict-between-activesupportjson-and-the-json-gem
 if defined?(ActiveSupport::JSON)

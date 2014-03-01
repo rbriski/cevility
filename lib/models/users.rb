@@ -1,7 +1,7 @@
 require 'koala'
 
-class User < Sequel::Model
-  set_dataset DB[:users]
+class User < Sequel::Model(:users)
+  plugin :timestamps
 
   class << self
     def exchange_token(token)
