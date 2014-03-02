@@ -50,17 +50,13 @@ describe 'User' do
     @user = User.new
   end
 
-  # it 'should know when it expires' do
-  #   @user.oauth_expires_at.should_not be_blank
-  # end
-
   it 'should know if its expired' do
-    @user.should_receive(:expires_at).and_return(Time.now.ago(5.hours))
-    @user.expired?.should be_true
+    expect(@user).to receive(:expires_at).and_return(Time.now.ago(5.hours))
+    expect(@user.expired?).to be_true
   end
 
   it 'should know if its not expired' do
-    @user.should_receive(:expires_at).and_return(Time.now.since(5.hours))
-    @user.expired?.should be_false
+    expect(@user).to receive(:expires_at).and_return(Time.now.since(5.hours))
+    expect(@user.expired?).to be_false
   end
 end

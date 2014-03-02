@@ -8,6 +8,6 @@ describe "the index", :type => :feature do
 
   it 'does not accept a blank license number' do
     visit '/status/'
-    page.status_code.should == 404
+    expect(page.status_code).to eq(404)
   end
 end

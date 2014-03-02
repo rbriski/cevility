@@ -6,10 +6,10 @@ describe 'License' do
   end
 
   it 'should upcase all numbers' do
-    @license.number.should == '23SFDF23'
+    expect(@license.number).to eq('23SFDF23')
   end
 
   it 'should use the number in to_s' do
-    "#{@license}".should == '23SFDF23'
+    expect("#{@license}").to eq('23SFDF23')
   end
 end
