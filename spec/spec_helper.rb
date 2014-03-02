@@ -11,6 +11,7 @@ ENV['DATABASE_URL'] ||= 'postgres://localhost/ev_test'
 DB = Sequel.connect(ENV.fetch("DATABASE_URL"))
 
 require 'database_cleaner'
+require 'factory_girl'
 
 Dir[File.dirname(__FILE__) + '/../lib/**/*.rb'].each {|file| require file }
 
@@ -26,6 +27,9 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = 'random'
+
+  # Set up factories
+  config.include FactoryGirl::Syntax::Methods
 
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction

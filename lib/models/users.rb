@@ -2,6 +2,7 @@ require 'koala'
 
 class User < Sequel::Model(:users)
   plugin :timestamps
+  one_to_many :licenses
 
   class << self
     def exchange_token(token)

@@ -29,4 +29,5 @@ group :development do
   gem "database_cleaner", git: 'https://github.com/bmabey/database_cleaner.git'
   gem 'capybara'
   gem 'launchy'
+  gem "factory_girl", "~> 4.0"
 end

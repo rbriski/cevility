@@ -1,4 +1,4 @@
-require 'license'
+require 'spec_helper'
 
 describe 'License' do
   before(:each) do
