@@ -21,7 +21,6 @@ Honeybadger.configure do |config|
 end
 use Honeybadger::Rack
 
-
 # Set up redis
 REDIS = Redis.new(:url => ENV.fetch('REDISCLOUD_URL'))
 

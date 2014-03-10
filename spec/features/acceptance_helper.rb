@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 require 'capybara/rspec'
+require 'rack_session_access'
+require 'rack_session_access/capybara'
 
 set :run, false
 set :raise_errors, true

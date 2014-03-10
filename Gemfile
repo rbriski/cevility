@@ -24,10 +24,12 @@ group :development do
   gem 'guard-rspec', :git => 'https://github.com/guard/guard-rspec.git', :require => false
   gem 'guard-coffeescript'
   gem 'racksh'
-  gem 'rspec'
+  gem 'rspec', '= 3.0.0.beta2'
   gem 'rack-test'
   gem "database_cleaner", git: 'https://github.com/bmabey/database_cleaner.git'
   gem 'capybara'
   gem 'launchy'
   gem "factory_girl", "~> 4.0"
+  gem 'selenium-webdriver'
+  gem 'rack_session_access'
 end

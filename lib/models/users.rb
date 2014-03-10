@@ -4,6 +4,10 @@ class User < Sequel::Model(:users)
   plugin :timestamps
   one_to_many :licenses
 
+  def save!
+    save
+  end
+
   class << self
     def exchange_token(token)
       oauth = Koala::Facebook::OAuth.new(ENV["FB_APP_ID"], ENV["FB_SECRET"])

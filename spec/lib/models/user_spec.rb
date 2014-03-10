@@ -52,11 +52,46 @@ describe 'User' do
 
   it 'should know if its expired' do
     expect(@user).to receive(:expires_at).and_return(Time.now.ago(5.hours))
-    expect(@user.expired?).to be_true
+    expect(@user.expired?).to be true
   end
 
   it 'should know if its not expired' do
     expect(@user).to receive(:expires_at).and_return(Time.now.since(5.hours))
-    expect(@user.expired?).to be_false
+    expect(@user.expired?).to be false
+  end
+
+  context 'validations' do
+    it 'should fail if email isnt set' do
+      u = User.new :name => 'blah'
+      expect{u.save}.to raise_error(Sequel::NotNullConstraintViolation)
+    end
+
+    it 'should fail if name isnt set' do
+      u = User.new :email => 'blah@blah.com'
+      expect{u.save}.to raise_error(Sequel::NotNullConstraintViolation)
+    end
+  end
+
+  context 'licenses' do
+
+    it 'should accept a license' do
+      u = FactoryGirl.build(:user)
+      u.save
+
+      u.add_license FactoryGirl.build(:license)
+      expect(u.licenses.size).to eq(1)
+    end
+
+    it 'should save the license' do
+      u = FactoryGirl.build(:user)
+      u.save
+
+      u.add_license FactoryGirl.build(:license)
+      u.save
+
+      expect(License[:user_id => u.id]).not_to be_blank
+    end
   end
 end
+
+

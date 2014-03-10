@@ -15,17 +15,19 @@ require 'factory_girl'
 
 Dir[File.dirname(__FILE__) + '/../lib/**/*.rb'].each {|file| require file }
 
+FactoryGirl.definition_file_paths = %w{./factories ./test/factories ./spec/factories  }
+FactoryGirl.find_definitions
+
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
-  config.treat_symbols_as_metadata_keys_with_true_values = true
   config.run_all_when_everything_filtered = true
   config.filter_run :focus
 
   # Enforce expect syntax
   config.expect_with :rspec do |c|
-      c.syntax = :expect
-    end
+    c.syntax = :expect
+  end
 
   # Run specs in random order to surface order dependencies. If you find an
   # order dependency and want to debug it, you can fix the order by providing
