@@ -1,21 +1,20 @@
 # spec/support/facebook_macros
 module FacebookMacros
 
-  def complete_facebook_dialogues_on_click(selector, test_user)
+  def complete_facebook_dialogues_on_click(selector, email, password)
     # until bookface version bumped to latest we have no way to know its ready so delay, not ideal
     sleep 1
     find("#{selector}").click
     return if page.driver.browser.window_handles.length == 1
-    fb_window = page.driver.browser.window_handles.last
-    within_window(fb_window) do
-      fill_in_facebook_form(test_user) if page.has_css?('#loginbutton')
+    within_window('Facebook') do
+      fill_in_facebook_form(email, password) if page.has_css?('#loginbutton')
       accept_permissions_outside_facebook
     end
   end
 
-  def fill_in_facebook_form(test_user)
-    fill_in('email', :with => "#{test_user.email}")
-    fill_in('pass', :with => "#{test_user.password}")
+  def fill_in_facebook_form(email, password)
+    fill_in('email', :with => "#{email}")
+    fill_in('pass', :with => "#{password}")
     find('#loginbutton').click
   end
 
