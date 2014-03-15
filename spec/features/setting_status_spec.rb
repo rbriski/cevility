@@ -27,4 +27,22 @@ describe "setting statuses", :type => :feature do
 
     expect(page).to have_content "Status for 4DF33 is currently charging"
   end
+
+  it 'can reset status' do
+    visit '/'
+    fill_in 'license', :with => '4df33'
+    click_button 'This is my car'
+
+    choose 'CHARGING'
+    click_button 'Set Status'
+
+    visit '/'
+    fill_in 'license', :with => '4df33'
+    click_button 'This is my car'
+
+    choose 'OK'
+    click_button 'Set Status'
+
+    expect(page).to have_content "Status for 4DF33 is ok to unplug"
+  end
 end

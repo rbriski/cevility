@@ -1,7 +1,7 @@
 <div class="container">
 <div class="text-center col-md-4 col-md-offset-4">
-<h1>Status for <i><%= @status.license %></i> is <%= statuses(@status.status) %>.</h1>
-<h1><small><%= @status.description %></small></h1>
+<h1>Status for <i><%= @license.number %></i> is <%= statuses(@license.status.status) %>.</h1>
+<h1><small><%= @license.status.description %></small></h1>
 <a href="/">Check another status</a>
 </div>
 </div>

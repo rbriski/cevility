@@ -27,7 +27,7 @@ group :development do
   gem 'rspec', '= 3.0.0.beta2'
   gem 'rack-test'
   gem "database_cleaner", git: 'https://github.com/bmabey/database_cleaner.git'
-  gem 'capybara'
+  gem 'capybara', :git => 'https://github.com/jnicklas/capybara.git'
   gem 'launchy'
   gem "factory_girl", "~> 4.0"
   gem 'selenium-webdriver'

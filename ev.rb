@@ -21,7 +21,6 @@ class EV < Sinatra::Base
     end
 
     def statuses(status)
-      puts status
       s = {
         'OK' => 'ok to unplug',
         'CHARGING' => 'currently charging',
@@ -61,11 +60,10 @@ class EV < Sinatra::Base
   end
 
   get '/status/:license' do
-    license = License.new :number => params[:license]
+    @license = License[:number => params[:license]]
 
-    @status = Status[:license => license.number]
-    if @status.blank?
-      flash[:danger] = "There is no record of that license [#{license}]"
+    if @license.blank?
+      flash[:danger] = "There is no record of that license [#{params[:license]}]"
       redirect '/'
     else
       erb :check_status
@@ -79,12 +77,10 @@ class EV < Sinatra::Base
 
   post '/set/:license' do
     @status = params[:status]
-    @license = License.new :number => params[:license]
+    @license = License.find_or_create_by_number(params[:license])
 
-    status = Status.find_or_create_by_license(@license.number)
-    status.status = @status[:name]
-    status.description = @status[:description]
-    status.save
+    @license.status = Status.new(@status)
+    @license.save
 
     redirect "/status/#{@license}"
   end
