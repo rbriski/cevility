@@ -27,8 +27,7 @@ class License < Sequel::Model(:licenses)
   end
 
   def status=(st)
-    current_status = Status[:license_id => self.id]
-    current_status.delete if current_status
+    Status.where(:license_id => self.id).delete
 
     super
   end
