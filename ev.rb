@@ -98,6 +98,14 @@ class EV < Sinatra::Base
     erb :sign, :layout => false
   end
 
+  post '/user/assign/:number' do
+    @license = License.find_or_create_by_number(params[:number])
+    current_user.add_license @license
+    current_user.save
+
+    erb :'shared/login_license_assignment', :layout => false
+  end
+
   not_found do
     status 404
     erb :not_found

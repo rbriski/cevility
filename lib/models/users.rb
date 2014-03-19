@@ -53,7 +53,16 @@ class User < Sequel::Model(:users)
     end
   end
 
+  def assigned_numbers
+    self.licenses.map(&:number)
+  end
+
   def expired?
     Time.now > expires_at
+  end
+
+  def has_number? number
+    l = License.new(:number => number)
+    self.assigned_numbers.include? l.number
   end
 end

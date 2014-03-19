@@ -1,0 +1,30 @@
+<div id="login_license">
+
+<% if current_user.blank? %>
+
+<hr />
+
+<a id='connect' class="btn btn-block btn-social btn-facebook" href="<%= request.fullpath %>">
+  <i class="fa fa-facebook"></i>
+  Log in for more options
+</a>
+
+<% else %>
+
+<% if not current_user.has_number?(@license.number) %>
+
+<hr />
+
+<h4>You don't have this license plate assigned to your account yet.</h4>
+<button id='assign_license' type="button" class="btn btn-success" data-number="<%= @license.number %>" data-href="/user/assign/<%= @license.number %>">
+<span class="glyphicon glyphicon-ok"></span> Assign <%= @license.number %>
+</button>
+
+<% end %>
+
+<% end %>
+
+<hr />
+
+</div>
+

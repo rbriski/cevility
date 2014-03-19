@@ -75,21 +75,57 @@ describe 'User' do
   context 'licenses' do
 
     it 'should accept a license' do
-      u = FactoryGirl.build(:user)
-      u.save
+      u = FactoryGirl.create(:user)
 
       u.add_license FactoryGirl.build(:license)
       expect(u.licenses.size).to eq(1)
     end
 
     it 'should save the license' do
-      u = FactoryGirl.build(:user)
+      u = FactoryGirl.create(:user)
+
+      l = FactoryGirl.build(:license)
+      u.add_license l
       u.save
 
-      u.add_license FactoryGirl.build(:license)
+      expect(u.licenses.first.number).to eq l.number
+    end
+
+    it 'should get the license numbers' do
+      u = FactoryGirl.create(:user)
+      u.add_license License.new(:number => 'abcd')
+      u.add_license License.new(:number => '2343')
       u.save
 
-      expect(License[:user_id => u.id]).not_to be_blank
+      expect(u.assigned_numbers).to eq ['ABCD', '2343']
+    end
+
+    it 'should know when it contains a license number (case insensitive)' do
+      u = User.new
+      expect(u).to receive(:assigned_numbers).and_return(['ABCD', '2345'])
+
+      expect(u.has_number?('abcd')).to be true
+    end
+
+    it 'should know when it contains a license number' do
+      u = User.new
+      expect(u).to receive(:assigned_numbers).and_return(['ABCD', '2345'])
+
+      expect(u.has_number?('ABCD')).to be true
+    end
+
+    it 'should know fail when there is no match' do
+      u = User.new
+      expect(u).to receive(:assigned_numbers).and_return(['dfdas'])
+
+      expect(u.has_number?('ABCD')).to be false
+    end
+
+    it 'should know fail when licenses is empty' do
+      u = User.new
+      expect(u).to receive(:assigned_numbers).and_return([])
+
+      expect(u.has_number?('ABCD')).to be false
     end
   end
 end
