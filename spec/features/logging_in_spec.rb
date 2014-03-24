@@ -8,6 +8,10 @@ describe "logging in", :type => :feature, :js => true do
     u.password = 'schmob'
   end
 
+  after(:all) do
+    Capybara.reset_sessions!
+  end
+
   it 'removes the facebook button' do
     visit '/set/4df33'
     complete_facebook_dialogues_on_click('#connect', 'schmob_jksvheu_schmriski@tfbnw.net', 'schmob')
