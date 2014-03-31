@@ -10,6 +10,7 @@ class EV < Sinatra::Base
     provider :facebook, ENV.fetch('FB_APP_ID'), ENV.fetch('FB_SECRET'), :scope => SCOPE
   end
 
+  use Rack::MethodOverride
 
   helpers do
     def flash_types

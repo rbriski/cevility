@@ -26,12 +26,20 @@
 <hr />
 
 <h4>Set your status</h4>
-<a href="/set/<%= current_user.licenses.first.number %>">
+<% current_user.licenses.each do | license | %>
 
-<button type="button" class="btn btn-default">
-<%= current_user.licenses.first.number %>
-</button>
-</a>
+  <div class="license">
+  <a href="/set/<%= license.number %>">
+
+  <button type="button" class="btn btn-default">
+  <%= license.number %>
+  </button>
+  </a>
+  </div>
+
+
+<% end %>
+
 
 <% end %>
 
