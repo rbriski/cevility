@@ -19,6 +19,6 @@ class EV < Sinatra::Base
       license.delete
     end
 
-    erb :'account/show'
+    redirect '/account'
   end
 end
