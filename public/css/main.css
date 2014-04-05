@@ -37,6 +37,14 @@ td.license {
   text-align: center;
 }
 
+div.fb-connect {
+  margin: 6px 5px 0 5px;
+}
+
+div.fb-connect a {
+  padding-right: 10px;
+}
+
 /* Lastly, apply responsive CSS fixes as necessary */
 @media (max-width: 767px) {
 #footer {

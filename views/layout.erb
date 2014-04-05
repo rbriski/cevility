@@ -86,26 +86,42 @@
     <nav class='navbar navbar-default navbar-static-top' role='navigation'>
     <div class='container'>
       <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
       <a class="navbar-brand" href="/">Cevility</a>
       <p class="navbar-text">Easy EV Etiquette</p>
       </div>
-      <div class="collapse navbar-collapse">
-      <ul id='nav-right' class="nav navbar-nav navbar-right">
-        <li><a href="#" id="help">Help</a></li>
-        <li><a href="http://blog.cevility.com">Blog</a></li>
-        <% if current_user %>
-        <li class="dropdown">
-          <a href="#" class="img dropdown-toggle" data-toggle="dropdown">
-            <img src="<%= current_user.image_url %>" />
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#" id="help">Help</a></li>
+          <% if current_user %>
+          <li class="dropdown">
+            <a href="#" class="img dropdown-toggle" data-toggle="dropdown">
+              <img src="<%= current_user.image_url %>" /> <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="/session/destroy" id='logout'>Logout</a></li>
+              <li><a href="/account"    id='account'>Account</a></li>
+            </ul>
+          </li>
+          <% else %>
+          <li><div class='fb-connect'>
+          <a id='connect' class="btn btn-block btn-social btn-facebook" href="<%= request.fullpath %>">
+            <i class="fa fa-facebook"></i>Log in
           </a>
-          <ul class="dropdown-menu">
-            <li><a href="/session/destroy" id='logout'>Logout</a></li>
-            <li><a href="/account"    id='account'>Account</a></li>
+          </div></li>
+          <% end %>
+        </ul>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="http://blog.cevility.com">Blog</a></li>
           </ul>
-        </li>
-        <% end %>
-      </ul>
-      </div>
+        </div>
+      </div><!-- /.navbar-collapse -->
     </div>
     </nav>
 
