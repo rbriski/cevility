@@ -7,6 +7,11 @@
     return Auth.login();
   });
 
+  $('#connect-1').bind('click', function(e) {
+    e.preventDefault();
+    return Auth.login();
+  });
+
   $('#logout').bind('click', function(e) {
     return Auth.logout();
   });

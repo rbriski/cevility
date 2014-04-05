@@ -3,6 +3,11 @@ $('#connect').bind 'click', (e) ->
 
   Auth.login()
 
+$('#connect-1').bind 'click', (e) ->
+  e.preventDefault()
+
+  Auth.login()
+
 $('#logout').bind 'click', (e) ->
   Auth.logout()
 
