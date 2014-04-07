@@ -11,22 +11,38 @@ body, h1, h2, h3, h4, h5, h6, p {
   font-family: 'Ubuntu', sans-serif;
 }
 
-/* Wrapper for page content to push down footer */
-#wrap {
+/* Part that appears in the screen */
+#screen {
   min-height: 100%;
   height: auto !important;
   height: 100%;
-  /* Negative indent footer by it's height */
-  margin: 0 auto -60px;
+  width: 100%;
+  display: table;
 }
 
 /* Set the fixed height of the footer here */
-#push,
-#footer {
-  height: 60px;
-}
-#footer {
+#docs {
+  position: relative;
   background-color: #eee;
+  padding-bottom: 300px;
+}
+
+.about-title {
+  color: #DD4814;
+}
+.about-subtitle {
+  margin: 0 0 40px;
+  color: #aea79f;
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.faq-question span {
+  top: 2px;
+}
+.faq-answer {
+  color: #aea79f;
+  margin-bottom: 25px;
 }
 
 
@@ -45,14 +61,32 @@ div.fb-connect a {
   padding-right: 10px;
 }
 
+.divider {
+  height: 30px;
+  text-align:center;
+  border-bottom:1px solid #eee;
+  margin-bottom: 45px;
+}
+.divider h2 {
+  display:inline-block;
+  position:relative;
+  top:-10px;
+  background:#fff;
+  padding:0 12px;
+}
+
 /* Lastly, apply responsive CSS fixes as necessary */
 @media (max-width: 767px) {
-#footer {
-  margin-left: -20px;
-  margin-right: -20px;
-  padding-left: 20px;
-  padding-right: 20px;
+  #footer {
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 }
+
+.ev-footer {
+  margin-top: 25px;
 }
 
 .footer-links {

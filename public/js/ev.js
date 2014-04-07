@@ -1,4 +1,10 @@
 (function() {
+  $('#about-header').click(function() {
+    return $('html, body').animate({
+      scrollTop: $('#top-of-about').offset().top
+    }, 700);
+  });
+
   $('#assign_license').bind('click', function(e) {
     var number;
     e.preventDefault();

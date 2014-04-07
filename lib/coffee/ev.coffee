@@ -1,3 +1,9 @@
+$('#about-header').click( ->
+  $('html, body').animate
+    scrollTop: $('#top-of-about').offset().top,
+    700
+)
+
 $('#assign_license').bind 'click', (e) ->
   e.preventDefault()
 
