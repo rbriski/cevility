@@ -50,14 +50,14 @@ class EV < Sinatra::Base
     erb :index
   end
 
-  post '/' do
+  post '/status/check' do
     license = License.new :number => params[:license]
+    redirect "/status/#{license}"
+  end
 
-    if params[:do] == 'Check Status'
-      redirect "/status/#{license}"
-    else
-      redirect "/set/#{license}"
-    end
+  post '/status/set' do
+    license = License.new :number => params[:license]
+    redirect "/set/#{license}"
   end
 
   get '/status/:license' do
