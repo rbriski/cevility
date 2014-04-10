@@ -28,4 +28,13 @@ class EV < Sinatra::Base
       erb :"qr_codes/new"
     end
   end
+
+  post '/qr/associate' do
+    license = License.find_or_create_by_number params[:license]
+    qr_code = QRCode[:slug => params[:slug]]
+
+    license.add_qr_code qr_code
+
+    redirect "/set/#{license.number}"
+  end
 end

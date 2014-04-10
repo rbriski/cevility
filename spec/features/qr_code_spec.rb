@@ -40,4 +40,19 @@ describe "qr code page", :type => :feature do
     visit "/qr/does_not_exist"
     expect(page.status_code).to eq(404)
   end
+
+  it 'should associate a qr code with a license' do
+    qr = QRCode.create_random
+
+    visit "/qr/#{qr.slug}"
+    fill_in 'license', :with => '3DRD233'
+    click_on 'Set Your Status'
+
+    fill_in 'status[description]',
+      :with => "Contact me a 8675309 for questions."
+    click_on 'Set Status'
+
+    visit "/qr/#{qr.slug}"
+    expect(page).to have_content "3DRD233"
+  end
 end

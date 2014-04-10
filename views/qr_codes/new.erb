@@ -20,7 +20,8 @@
 
 <form role="form" method='post' action='/qr/associate'>
 <div class='form-group'>
-<input id='set_status' type="text" class="form-control input-lg" name="license" placeholder="Your License Plate #  "/>
+<input id='associate_license' type="text" class="form-control input-lg" name="license" placeholder="Your License Plate #  "/>
+<input type="hidden" value="<%= @qr.slug %>" name="slug" />
 </div>
 <div class='form-group'>
 <input type='submit' name="do" class='btn btn-success btn-lg' value='Set Your Status' />
