@@ -12,7 +12,7 @@
 <h1><small>Check someone's charge status</small></h1>
 <form role="form" method='post' action='/status/check'>
 <div class='form-group'>
-<input type="text" class="form-control input-lg" name="license" autofocus="autofocus" placeholder="License Plate #  "/>
+<input id='check_status', type="text" class="form-control input-lg" name="license" autofocus="autofocus" placeholder="License Plate #  "/>
 </div>
 <div class='form-group'>
 <input type='submit' name="do" class='btn btn-success btn-lg' value='Check Status' />
@@ -42,7 +42,7 @@
 <h1><small>Set your status</small></h1>
 <form role="form" method='post' action='/status/set'>
 <div class='form-group'>
-<input type="text" class="form-control input-lg" name="license" placeholder="Your License Plate #  "/>
+<input id='set_status' type="text" class="form-control input-lg" name="license" placeholder="Your License Plate #  "/>
 </div>
 <div class='form-group'>
 <input type='submit' name="do" class='btn btn-success btn-lg' value='Set Status' />
@@ -53,3 +53,8 @@
 <% end %>
 
 </div></div>
+
+<% content_for :footer_docs do %>
+  <%= erb :"shared/footer_docs" %>
+
+<% end %>

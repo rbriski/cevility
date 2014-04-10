@@ -66,5 +66,54 @@ describe 'License' do
       l.status = s2
     end
 
+  context 'qr_code' do
+    it 'should add a new qr_code if none is passed' do
+      qr = instance_double("QRCode",
+        :license_id => nil,
+        :license_id= => '',
+        :save => ''
+      )
+      l = FactoryGirl.create(:license)
+      expect(QRCode).to receive(:create_random).once.and_return(qr)
+
+      expect(l.add_qr_code).to eq qr
+    end
+
+    it 'should associate qr_code if passed' do
+      qr = FactoryGirl.create(:qr_code)
+      l = FactoryGirl.create(:license)
+
+      expect(QRCode).not_to receive(:create_random)
+      q = l.add_qr_code(qr)
+      expect(q.license_id).to eq l.id
+    end
+
+    it 'should get the most recent qr code' do
+      l = FactoryGirl.create(:license)
+      qr_old = FactoryGirl.create(:qr_code, :slug => 'old',
+        :created_at => Time.now.ago(1.day),
+        :license_id => l.id
+      )
+      qr_new = FactoryGirl.create(:qr_code, :slug => 'new',
+        :created_at => Time.now.ago(1.hour),
+        :license_id => l.id
+      )
+
+      expect(l.qr_code).to eq qr_new
+    end
+
+    it 'should return nil if there is no qr_code' do
+      l = FactoryGirl.create(:license)
+      expect(l.qr_code).to be_nil
+    end
+
+    it 'should fail to add if the qr code already is associated' do
+      qr = instance_double("QRCode", :license_id => 2)
+      l = FactoryGirl.create(:license)
+
+      expect { l.add_qr_code(qr) }.to raise_error(QRCode::Exception)
+    end
+  end
+
   end
 end

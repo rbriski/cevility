@@ -15,4 +15,8 @@ FactoryGirl.define do
     status 'CHARGING'
     description 'Will be back at 11PM'
   end
+
+  factory :qr_code, :class => QRCode do
+    slug '4fed'
+  end
 end
