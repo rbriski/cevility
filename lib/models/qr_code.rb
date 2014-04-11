@@ -15,6 +15,11 @@ class QRCode < Sequel::Model(:qr_codes)
     qr
   end
 
+  def disassociate!
+    self.license_id = nil
+    self.save
+  end
+
   def license
     return nil if self.license_id.nil?
 

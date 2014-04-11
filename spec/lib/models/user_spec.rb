@@ -97,7 +97,7 @@ describe 'User' do
       u.add_license License.new(:number => '2343')
       u.save
 
-      expect(u.assigned_numbers).to eq ['ABCD', '2343']
+      expect(u.assigned_numbers).to match_array(['ABCD', '2343'])
     end
 
     it 'should know when it contains a license number (case insensitive)' do

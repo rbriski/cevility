@@ -32,5 +32,14 @@ describe 'QRCode' do
 
       expect(qr.license).to eq l
     end
+
+    it 'can disassociate itself' do
+      l = FactoryGirl.create(:license)
+      qr = l.add_qr_code
+
+      qr.disassociate!
+
+      expect(qr.license).to be nil
+    end
   end
 end

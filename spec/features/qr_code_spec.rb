@@ -55,4 +55,17 @@ describe "qr code page", :type => :feature do
     visit "/qr/#{qr.slug}"
     expect(page).to have_content "3DRD233"
   end
+
+  it 'should disassociate a qr code with a license if the user made a mistake' do
+    qr = QRCode.create_random
+
+    visit "/qr/#{qr.slug}"
+    fill_in 'license', :with => '3DRD233'
+    click_on 'Set Your Status'
+
+    click_on 'Undo'
+
+    visit "/qr/#{qr.slug}"
+    expect(page).to have_content "Welcome to Cevility!"
+  end
 end

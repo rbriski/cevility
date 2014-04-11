@@ -23,7 +23,7 @@ class EV < Sinatra::Base
     end
 
     if @qr.linked?
-      redirect "/status/#{qr.license.number}"
+      redirect "/status/#{@qr.license.number}"
     else
       erb :"qr_codes/new"
     end
@@ -35,6 +35,18 @@ class EV < Sinatra::Base
 
     license.add_qr_code qr_code
 
+    flash[:info] = <<-INFO
+    You've associated this QR Code with [#{license.number}].
+    <a href="/qr/disassociate/#{qr_code.slug}">Undo</a>.
+    INFO
+
     redirect "/set/#{license.number}"
+  end
+
+  get '/qr/disassociate/:code' do
+    qr_code = QRCode[:slug => params[:code]]
+    qr_code.disassociate!
+
+    redirect "/qr/#{qr_code.slug}"
   end
 end
