@@ -3,6 +3,15 @@ class EV < Sinatra::Base
     "http://#{File.join(request.host, 'qr', qr.slug)}"
   end
 
+  get '/qr/random' do
+    @qr = QRCode.create_random
+    redirect "/qr/#{@qr.slug}/show"
+  end
+
+  get '/qr/flyer' do
+    erb :"print/flyer", :layout => false
+  end
+
   get '/qr/:code/show' do
     if qr = QRCode[:slug => params[:code]]
       @qr = RQRCode::QRCode.new(
@@ -10,7 +19,7 @@ class EV < Sinatra::Base
         :size => 4,
         :level => :h
       )
-      erb :sign, :layout => false
+      erb :"print/sign", :layout => false
     else
       not_found
     end
