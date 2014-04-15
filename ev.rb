@@ -1,4 +1,5 @@
 require 'sinatra/base'
+require 'sinatra/content_for'
 require 'active_support/all'
 
 SCOPE = 'email'
@@ -12,6 +13,7 @@ class EV < Sinatra::Base
 
   use Rack::MethodOverride
 
+  helpers Sinatra::ContentFor
   helpers do
     def flash_types
       [:success, :info, :warning, :danger]
@@ -86,17 +88,8 @@ class EV < Sinatra::Base
     redirect "/status/#{@license}"
   end
 
-  get '/qr/:code' do
-    redirect '/status/7BWN656'
-  end
-
   get '/privacy' do
     erb :privacy
-  end
-
-  get '/qr/:code/show' do
-    @qr = RQRCode::QRCode.new( "http://www.cevility.com/qr/#{params[:code]}", :size => 4, :level => :h )
-    erb :sign, :layout => false
   end
 
   post '/user/assign/:number' do

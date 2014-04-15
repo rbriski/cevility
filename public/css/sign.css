@@ -1,5 +1,5 @@
 /*Reset Style*/
-body {
+.sign {
   margin:0px 0px 0px 40px;
   padding:0;
   line-height: 1.4em;
@@ -10,6 +10,41 @@ body {
   background-color: #D31900;
   height: 850px;
   width: 612px;
+}
+
+.flyer {
+  margin:0px 0px 0px 40px;
+  padding:0;
+  line-height: 1.4em;
+  word-spacing:1px;
+  letter-spacing:0.2px;
+  font: 1em 'Ruda', sans-serif;
+  color: #000;
+  background-color: #FFF;
+  height: 850px;
+  width: 612px;
+}
+
+#instructions {
+  background-color: #fff;
+  color: #000;
+  padding: 5px;
+}
+
+#instructions ul {
+  text-align: left;
+}
+
+#instructions .muted {
+  color: #999;
+}
+
+ol {
+  text-align: left;
+}
+
+ol li {
+  padding-bottom: 10px;
 }
 
 .container {
@@ -47,14 +82,14 @@ td {
 td.black { background-color: #000; }
 td.white { background-color: #fff; }
 
-ul {
+.footer ul {
   display: block;
   list-style-type: disc;
   padding: 0px;
   margin: 0px;
 }
 
-li {
+.footer ul li {
   display: inline;
   padding: 0 2px;
 }
@@ -62,8 +97,4 @@ li {
 .muted {
   color: #fff;
   font-weight: bold;
-}
-
-#instructions {
-  display: none;
 }

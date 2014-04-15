@@ -27,6 +27,19 @@ body, h1, h2, h3, h4, h5, h6, p {
   padding-bottom: 300px;
 }
 
+/* Set the fixed height of the footer here */
+#new-signup-docs {
+  text-align: left;
+}
+
+#new-signup-docs dt {
+  color: #DD4814;
+}
+
+#new-signup-docs dd {
+  color: #aea79f;
+}
+
 .about-title {
   color: #DD4814;
 }
