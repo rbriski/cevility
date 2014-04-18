@@ -4,6 +4,10 @@ $('#about-header').click( ->
     700
 )
 
+$("input[name='status[status]']").click( ->
+  $("textarea#status_description").val('')
+)
+
 $('#assign_license').bind 'click', (e) ->
   e.preventDefault()
 

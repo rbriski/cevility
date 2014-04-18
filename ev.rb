@@ -5,6 +5,7 @@ require 'active_support/all'
 SCOPE = 'email'
 class EV < Sinatra::Base
   set :logging, true
+  set :erb, :trim => '-'
   use Rack::Flash, :sweep => true
 
   use OmniAuth::Builder do
@@ -74,7 +75,8 @@ class EV < Sinatra::Base
   end
 
   get '/set/:license' do
-    @license = License.new :number => params[:license]
+    @license = License.find_or_create_by_number(params[:license])
+
     erb :set_license
   end
 

@@ -45,4 +45,37 @@ describe "setting statuses", :type => :feature do
 
     expect(page).to have_content "Status for 4DF33 is ok to unplug"
   end
+
+  it 'keeps the status description when re-editing' do
+    visit '/'
+    fill_in 'set_status', :with => '4df33'
+    click_button 'Set Status'
+
+    choose 'CHARGING'
+    fill_in 'status[description]', :with => 'I just set this'
+    click_button 'Set Status'
+
+    visit '/'
+    fill_in 'set_status', :with => '4df33'
+    click_button 'Set Status'
+
+    expect(find_field('status[description]').value).to eq 'I just set this'
+  end
+
+  it 'keeps the status when re-editing' do
+    visit '/'
+    fill_in 'set_status', :with => '4df33'
+    click_button 'Set Status'
+
+    choose 'CHARGING'
+    fill_in 'status[description]', :with => 'I just set this'
+    click_button 'Set Status'
+
+    visit '/'
+    fill_in 'set_status', :with => '4df33'
+    click_button 'Set Status'
+
+    expect(find_field('status_charging')).to be_checked
+    expect(find_field('status_ok')).not_to be_checked
+  end
 end

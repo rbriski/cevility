@@ -5,6 +5,10 @@
     }, 700);
   });
 
+  $("input[name='status[status]']").click(function() {
+    return $("textarea#status_description").val('');
+  });
+
   $('#assign_license').bind('click', function(e) {
     var number;
     e.preventDefault();

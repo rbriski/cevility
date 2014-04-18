@@ -15,14 +15,24 @@
 <div class='form-group'>
 <div class="radio">
 <label>
-  <input type="radio" name="status[status]" id="status_ok" value="OK" CHECKED/>
+  <input type="radio"
+    name="status[status]"
+    id="status_ok"
+    value="OK"
+    <% if @license.status.status == 'OK' %>CHECKED<% end %>
+  />
   <span class="label label-success">OK</span> You are OK with someone unplugging your car
 </label>
 </div>
 
 <div class="radio">
 <label>
-  <input type="radio" name="status[status]" id="status_charging" value="CHARGING" />
+<input type="radio"
+  name="status[status]"
+  id="status_charging"
+  value="CHARGING"
+  <% if @license.status.status == 'CHARGING' %>CHECKED<% end %>
+/>
   <span class="label label-danger">CHARGING</span> Please do not unplug my car
 </label>
 </div>
@@ -30,7 +40,12 @@
 
 <div class="radio">
 <label>
-  <input type="radio" name="status[status]" id="status_waiting" value="WAITING" />
+<input type="radio"
+  name="status[status]"
+  id="status_waiting"
+  value="WAITING"
+  <% if @license.status.status == 'WAITING' %>CHECKED<% end %>
+/>
   <span class="label label-default">WAITING</span> You would like to be plugged in when someone else has finished.
 </label>
 </div>
@@ -39,7 +54,9 @@
 
 <div class="form-group">
 <label for="description">Additional status message</label>
-<textarea style="width:100%;" name='status[description]'></textarea>
+<textarea style="width:100%;" name='status[description]' id='status_description'>
+<%= @license.status.description -%>
+</textarea>
 </div>
 </div>
 
