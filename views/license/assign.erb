@@ -1,0 +1,26 @@
+<div class="container">
+
+<div class="text-center col-md-4 col-md-offset-4">
+
+<% flash_types.select{ |kind| flash.has?(kind) }.each do |kind| %>
+<div class="alert alert-<%= kind %>">
+  <%= flash[kind] %>
+</div>
+<% end %>
+
+<h1>Add a license number</h1>
+<form role="form" method='post' action='/license/assign'>
+<div class='form-group'>
+<input id='assign_number', type="text" class="form-control input-lg" name="number" autofocus="autofocus" placeholder="License Plate #  "/>
+</div>
+<div class='form-group'>
+<input type='submit' name="do" class='btn btn-success btn-lg' value='Assign' />
+</div>
+</form>
+
+</div></div>
+
+<% content_for :footer_docs do %>
+  <%= erb :"shared/footer_docs" %>
+
+<% end %>

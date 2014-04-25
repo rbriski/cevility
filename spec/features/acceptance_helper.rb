@@ -16,6 +16,8 @@ set :raise_errors, true
 set :logging, false
 
 RSpec.configure do |config|
+  config.order = 'default'
+
   config.include FacebookMacros
 
   config.include Capybara::DSL, :type => :feature

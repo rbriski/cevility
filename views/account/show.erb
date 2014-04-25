@@ -1,33 +1,50 @@
 <div class="container">
 <div class="text-center col-md-4 col-md-offset-4">
 
-<div id='alerts'>
+<% flash_types.select{ |kind| flash.has?(kind) }.each do |kind| %>
+<div class="alert alert-<%= kind %>">
+  <%= flash[kind] %>
 </div>
+<% end %>
 
 <h1>Your licenses</h1>
 
 <% unless @current_user.licenses.blank? %>
   <table class='table'>
   <% @current_user.licenses.each do | license | %>
-    <form action="/license/<%= license.id %>" method="POST">
-    <input type="hidden" name="_method" value="delete">
     <tr><td class='license'>
       <a href="/set/<%= license.number %>">
       <button type='button' class="btn btn-default">
       <%= license.number %>
       </button>
       </a>
-      <button type="submit" class="btn btn-link">
-        <span class="glyphicon glyphicon-remove"></span>
-      </button>
+    </td><td>
+    <ul class='control-links'>
+    <li>
+      <a href="/qr/add/<%= license.id %>">
+        <span>QR Code</span>
+        <span class='glyphicon glyphicon-qrcode'></span>
+      </a>
+    </li>
+    <li>
+      <a href="/license/delete/<%= license.id %>">
+        <span>Remove</span>
+        <span class='glyphicon glyphicon-remove'></span>
+      </a>
+    </li>
+    </ul>
     </td></tr>
-    </form>
   <% end %>
+  <tr><td colspan='2'>
+    <ul class='control-links'><li>
+    <a href="/license/assign">Add another</a>
+    </li></ul>
+  </td></tr>
   </table>
 
 <% else %>
 
-You don't have any licenses
+You don't have any licenses. <a href="/license/assign">Add one</a>.
 
 <% end %>
 

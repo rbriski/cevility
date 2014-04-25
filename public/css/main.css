@@ -129,6 +129,18 @@ div.fb-connect a {
   padding-top: 0px;
 }
 
+ul.control-links {
+  padding-top: 8px;
+  margin: 0;
+  font-size: 14px;
+  text-align: center;
+}
+
+.control-links li {
+  display: inline;
+  padding-right: 10px;
+}
+
 #login_license {
   text-align: center;
 }

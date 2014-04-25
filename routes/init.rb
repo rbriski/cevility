@@ -1,3 +1,5 @@
 require_relative 'sessions'
+require_relative 'statuses'
+require_relative 'licenses'
 require_relative 'account'
 require_relative 'qr_codes'

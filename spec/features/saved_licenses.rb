@@ -9,16 +9,28 @@ describe "saved licenses", :type => :feature, :js => true do
     Capybara.reset_sessions!
   end
 
-  it 'saves a license' do
-    visit "/set/#{number}"
+  it 'can add licenses to your account' do
+    visit '/'
     complete_facebook_dialogues_on_click('#connect', 'schmob_jksvheu_schmriski@tfbnw.net', 'schmob')
 
-    find('#assign_license').click
+    sleep 1
+    visit '/account'
+    click_on 'Add one'
 
-    expect(page).to have_content('is now assigned to you')
+    fill_in 'assign_number', :with => 'BOB'
+    click_on 'Assign'
+
+    expect(page).to have_content('BOB')
   end
 
-  it 'shows a license on the index' do
+  it 'saves a license' do
+    visit '/'
+    # complete_facebook_dialogues_on_click('#connect', 'schmob_jksvheu_schmriski@tfbnw.net', 'schmob')
+
+    sleep 1
+    visit "/set/#{number}"
+    find('#assign_license').click
+
     visit '/'
     expect(page).to have_content(number)
   end

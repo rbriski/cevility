@@ -11,14 +11,4 @@ class EV < Sinatra::Base
       redirect '/'
     end
   end
-
-  # Remove the license from the current account
-  delete '/license/:id' do
-    if current_user
-      license = License[params[:id]]
-      license.delete
-    end
-
-    redirect '/account'
-  end
 end

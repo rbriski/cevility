@@ -52,6 +52,13 @@ class EV < Sinatra::Base
     redirect "/set/#{license.number}"
   end
 
+  get '/qr/add/:license_id' do
+    license = License[params[:license_id]]
+    license.qr_code || license.add_qr_code
+
+    redirect "/qr/#{license.qr_code.slug}/show"
+  end
+
   get '/qr/disassociate/:code' do
     qr_code = QRCode[:slug => params[:code]]
     qr_code.disassociate!

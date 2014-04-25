@@ -127,6 +127,13 @@ describe 'User' do
 
       expect(u.has_number?('ABCD')).to be false
     end
+
+    it 'cant add license with same number' do
+      u = FactoryGirl.create(:user)
+      u.add_license License.new(:number => 'abcd')
+
+      expect { u.add_license License.new(:number => 'abcd') }.to raise_error(Sequel::UniqueConstraintViolation)
+    end
   end
 end
 

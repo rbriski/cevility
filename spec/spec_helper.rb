@@ -7,8 +7,7 @@ require 'rubygems'
 require 'bundler/setup'
 Bundler.require
 
-ENV['DATABASE_URL'] ||= 'postgres://localhost/ev_test'
-DB = Sequel.connect(ENV.fetch("DATABASE_URL"))
+DB = Sequel.connect(ENV.fetch("TEST_DATABASE_URL"))
 
 require 'database_cleaner'
 require 'factory_girl'

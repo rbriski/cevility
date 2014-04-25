@@ -23,17 +23,10 @@ class EV < Sinatra::Base
     def current_user
       @current_user ||= User[:id => session['user_id']] if session['user_id']
     end
-
-    def statuses(status)
-      s = {
-        'OK' => 'ok to unplug',
-        'CHARGING' => 'currently charging',
-        'WAITING' => 'waiting for a charge'
-      }
-      s[status]
-    end
   end
 
+  # For using form helper-type parameter names
+  # E.g. license[number], user[name]
   before do
     new_params = {}
     params.each_pair do |full_key, value|
@@ -53,53 +46,8 @@ class EV < Sinatra::Base
     erb :index
   end
 
-  post '/status/check' do
-    license = License.new :number => params[:license]
-    redirect "/status/#{license}"
-  end
-
-  post '/status/set' do
-    license = License.new :number => params[:license]
-    redirect "/set/#{license}"
-  end
-
-  get '/status/:license' do
-    @license = License[:number => params[:license]]
-
-    if @license.blank?
-      flash[:danger] = "There is no record of that license [#{params[:license]}]"
-      redirect '/'
-    else
-      erb :check_status
-    end
-  end
-
-  get '/set/:license' do
-    @license = License.find_or_create_by_number(params[:license])
-
-    erb :set_license
-  end
-
-  post '/set/:license' do
-    @status = params[:status]
-    @license = License.find_or_create_by_number(params[:license])
-
-    @license.status = Status.new(@status)
-    @license.save
-
-    redirect "/status/#{@license}"
-  end
-
   get '/privacy' do
     erb :privacy
-  end
-
-  post '/user/assign/:number' do
-    @license = License.find_or_create_by_number(params[:number])
-    current_user.add_license @license
-    current_user.save
-
-    erb :'shared/login_license_assignment', :layout => false
   end
 
   not_found do
